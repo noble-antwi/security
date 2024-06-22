@@ -87,3 +87,40 @@ cf-templates-q4z4j090xej9-eu-central-1
 
 In the 07-example-corp-pii-885272027408-eu-central-1  bucket, I uplodaded all the four files downloaded
 ![Uploaded Folders](Files/media/003_FolderUploadSucess.png)
+
+
+## Permissions
+
+In this project, I am implementing a robust workflow to proactively identify and secure sensitive data within our AWS environment. By leveraging Event Bridge and Step Functions, the focus is on automating the detection and management of personally identifiable information (PII), financial data, and credentials stored in Amazon S3 Buckets. This approach ensures compliance with stringent regulations and enhances data protection measures.
+
+### Example Scenario: Example Corp.
+
+Example Corp. is a credit card payment company entrusted with customer PII data stored in Amazon S3. Compliance requirements dictate meticulous control over this data within our AWS infrastructure.
+
+Our goal is to automatically tag any object containing PII with a "PII" label, thereby elevating its protection status. Additionally, we're implementing Attribute Based Access Control (ABAC) through IAM policies linked to these tags. This ensures that only authorized personnel have access to these sensitive objects, adhering strictly to our security protocols.
+
+This automated mechanism not only enhances our ability to detect sensitive data but also strengthens our overall data governance framework. It's a proactive step towards maintaining compliance and safeguarding sensitive information in a scalable manner.
+
+## Verify the Sensitive Data and My Access
+
+To start, I need to verify the sensitive data in my S3 bucket and ensure I have access to it. I log into the AWS Console and navigate to Services. From there, I choose Storage and then select S3. I locate the bucket named `07-example-corp-pii-885272027408-eu-central-1` and explore the folders and files inside. By verifying that I can access these files, I take some time to investigate the data contained within to ensure they are indeed the sensitive data I need to protect.
+
+![S3BucektExploation](Files/media/008_ExploringTheS3BucketContent.png)
+
+## Create the Amazon Macie Job
+
+Next, I'll set up a job in Amazon Macie to detect sensitive data. I begin by clicking on Services at the top of my browser, selecting Security, Identity and Compliance, and then choosing Amazon Macie. 
+![AMazonMaciePortal](Files/media/004_DefaultAMazonMaciePortal.png)
+
+Once in Amazon Macie, I click Create job. When prompted with "Are you sure that you want to create a job?", I confirm by clicking Yes. I choose to scan specific buckets and check the S3 bucket named `07-example-corp-pii-885272027408-eu-central-1`, then proceed to the next step.
+
+After reviewing the selected S3 bucket, I move forward and choose to create a one-time job. For data identifiers, I opt for custom settings. I select "Use specific managed data identifiers" and check the box at the top next to "Sensitive data types" to include all 155 identifiers. 
+![OnTimeJobOption](Files/media/005_SelectingOneTimeJobOption.png)
+
+![CustomDataIdentifiers](Files/media/006_CustomDataIdentifies.png)
+
+I continue without adding custom data identifiers or allow lists. On the general settings page, I give the job the name, `IdentifySensitiveS3ObjectData`. After reviewing all settings, I submit the job, which initiates the Amazon Macie scan of my selected S3 buckets. The status of the job can be monitored in the Amazon Macie jobs console.
+![RunningMacieJob](Files/media/007_JobRunning.png)
+
+The Macie job takes about 10 minutes to complete. While it's running, I can proceed with the next steps in setting up the workflow, and review the Macie job results once it finishes.
+
