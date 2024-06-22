@@ -1,3 +1,0 @@
-CustomerNumber,FirstName,LastName,EmailAddress,Country,PhoneNumber,Salary,CreditScore,Gender
-1,Alice,Smith,alicetest@example.corp,IE,+4407654321012,120000,1000,female
-2,Bob,Jones,bobtest@example.corp,GB,+4407654321012,900000,600,male
